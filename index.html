@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST LIBRARY SYSTEM - Realtime Return System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Mali:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #e8e2d6;
+            --note-pink: #f2e1db;
+            --note-brown: #bca18e;
+            --note-grey: #c2b6a0;
+            --note-cream: #efe3d9;
+            --text-dark: #5d4a3e;
+            --news-yellow: #fdfd96;
+            --success-green: #a3b18a;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#bcbab3 1px, transparent 1px);
+            background-size: 25px 25px;
+            font-family: 'Mali', cursive;
+            color: var(--text-dark);
+            margin: 0; padding: 0; min-height: 100vh;
+        }
+
+        /* --- User Profile --- */
+        .user-menu-wrapper { position: fixed; top: 20px; right: 20px; z-index: 1000; display: none; }
+        #user-badge {
+            background: white; padding: 8px 15px; border: 1px solid var(--note-brown);
+            box-shadow: 4px 4px 0px var(--note-brown); cursor: pointer; font-weight: bold;
+        }
+        .logout-popup {
+            position: absolute; top: 50px; right: 0; background: white; border: 1px solid var(--note-brown);
+            padding: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: none; min-width: 150px; text-align: center;
+        }
+
+        /* --- Board Layout --- */
+        .board { max-width: 950px; margin: 40px auto; background: rgba(255, 255, 255, 0.4); padding: 40px; border-radius: 10px; min-height: 80vh; position: relative; }
+        
+        /* --- News Banner --- */
+        #news-banner {
+            background: var(--news-yellow); padding: 12px 25px; margin: -20px auto 30px auto;
+            max-width: 80%; text-align: center; box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+            transform: rotate(-1deg); border: 1px dashed #bca18e; display: none; font-weight: 500;
+        }
+
+        /* --- UI Components --- */
+        .nav-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; }
+        .nav-note { width: 130px; height: 130px; padding: 10px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold; background-color: var(--note-cream); position: relative; transition: 0.3s; }
+        .nav-note:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 5; }
+        
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        
+        .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .book-card { background: white; padding: 20px; border-left: 5px solid var(--note-brown); box-shadow: 3px 3px 10px rgba(0,0,0,0.05); cursor: pointer; }
+        
+        .admin-table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
+        .admin-table th, .admin-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        
+        /* --- History Styles --- */
+        .history-item { background: white; padding: 15px; margin-bottom: 10px; border-bottom: 2px solid var(--note-pink); display: flex; justify-content: space-between; align-items: center; }
+        .btn-return { background: var(--success-green); color: white; border: none; padding: 5px 10px; cursor: pointer; font-family: 'Mali'; border-radius: 4px; }
+
+        .btn-main { background: var(--note-brown); color: white; border: none; padding: 12px 20px; width: 100%; cursor: pointer; font-family: 'Mali'; margin-top: 10px; font-size: 1.1rem; }
+        .login-card { background: white; padding: 50px; max-width: 400px; margin: 100px auto; text-align: center; box-shadow: 15px 15px 0px var(--note-grey); border: 2px solid var(--note-brown); }
+        .login-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; font-family: 'Mali'; box-sizing: border-box; font-size: 1rem; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <section id="login-page">
+        <div class="login-card">
+            <h1 style="font-family: 'Dancing Script'; font-size: 3.5rem; margin: 0 0 10px 0;">TEST LIBRARY</h1>
+            <p style="margin-bottom: 30px;">Library Management System</p>
+            <input type="text" id="username" class="login-input" placeholder="Username">
+            <input type="password" id="password" class="login-input" placeholder="Password">
+            <button class="btn-main" onclick="handleLogin()">เข้าสู่ระบบ</button>
+        </div>
+    </section>
+
+    <div class="user-menu-wrapper" id="user-wrapper">
+        <div id="user-badge" onclick="toggleLogoutPopup()">
+            👤 <span id="user-name-display"></span> ▼
+        </div>
+        <div class="logout-popup" id="logout-menu">
+            <button class="btn-main" style="background:#d68c8c; margin:0; padding: 5px;" onclick="handleLogout()">ออกจากระบบ</button>
+        </div>
+    </div>
+
+    <div class="board" id="main-content" style="display: none;">
+        <header style="text-align:center;"><h1 style="font-family: 'Dancing Script'; font-size: 3.5rem;">TEST LIBRARY SYSTEM</h1></header>
+
+        <div id="news-banner"><strong>📢 ประกาศ:</strong> <span id="news-text-display"></span></div>
+
+        <nav class="nav-container">
+            <div class="nav-note" style="background: var(--note-pink); transform: rotate(-2deg);" onclick="showPage('home')">หน้าแรก / ค้นหา</div>
+            <div class="nav-note" style="background: var(--note-grey); transform: rotate(1deg);" onclick="showPage('history')">ประวัติการยืม</div>
+            <div id="admin-nav" class="nav-note" style="background: #fdfd96; transform: rotate(-1deg); display:none;" onclick="showPage('admin')">⚙️ จัดการระบบ</div>
+            <div class="nav-note" style="background: var(--note-cream); transform: rotate(1.5deg);" onclick="showPage('about')">เกี่ยวกับเรา</div>
+        </nav>
+
+        <section id="home" class="page active">
+            <input type="text" class="login-input" placeholder="🔍 ค้นหาหนังสือ..." style="margin-bottom:30px;">
+            <div id="book-display-grid" class="book-grid"></div>
+        </section>
+
+        <section id="admin" class="page">
+            <h2 style="border-bottom: 2px solid var(--note-brown);">Admin Dashboard</h2>
+            <div style="background: #fff; padding: 20px; margin-bottom: 30px; border: 1px dashed var(--note-brown);">
+                <h3>🆕 แจ้งข่าวหน้าเว็บ</h3>
+                <input type="text" id="news-input" class="login-input" placeholder="พิมพ์ข่าวใหม่...">
+                <button class="btn-main" style="background: #a3b18a;" onclick="updateNews()">อัปเดตประกาศ</button>
+            </div>
+            <h3>📚 จัดการจำนวนหนังสือ</h3>
+            <table class="admin-table">
+                <thead><tr><th>ชื่อหนังสือ</th><th>ผู้แต่ง</th><th>จำนวนสต็อก</th></tr></thead>
+                <tbody id="admin-book-list"></tbody>
+            </table>
+        </section>
+
+        <section id="borrow" class="page">
+            <button class="btn-main" style="width:auto;" onclick="showPage('home')">← กลับ</button>
+            <div style="background:white; padding:30px; border:1px solid #ddd; max-width:500px; margin:20px auto; text-align:center;">
+                <h2>ใบคำร้องยืมหนังสือ</h2>
+                <h3 id="display-book-title"></h3>
+                <p>คงเหลือ: <span id="display-book-qty"></span> เล่ม</p>
+                <button class="btn-main" onclick="confirmBorrow()">ยืนยันการยืม</button>
+            </div>
+        </section>
+
+        <section id="history" class="page">
+            <h2 id="history-title">ประวัติการยืม</h2>
+            <div id="history-container"></div>
+        </section>
+
+        <section id="about" class="page">
+            <div style="text-align: center; padding: 40px;"><h2>เกี่ยวกับเรา</h2><p>TEST LIBRARY SYSTEM ยินดีให้บริการ</p></div>
+        </section>
+    </div>
+
+    <script>
+        // --- Data ---
+        const DEFAULT_BOOKS = [
+            { id: 0, title: "ศิลปะของการปล่อยวาง", author: "ใจดี", qty: 5 },
+            { id: 1, title: "เรียนรู้ HTML ใน 1 วัน", author: "Code Master", qty: 2 },
+            { id: 2, title: "จิตวิทยาสายดาร์ก", author: "Dr. Dark", qty: 0 }
+        ];
+
+        let libraryBooks = JSON.parse(localStorage.getItem('books')) || DEFAULT_BOOKS;
+        let borrowHistory = JSON.parse(localStorage.getItem('borrowHistory')) || [];
+        let currentUsername = "";
+        let isAdminUser = false;
+
+        // --- Real-time Sync ---
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'library_news') updateNewsUI(e.newValue);
+            if (e.key === 'books') { libraryBooks = JSON.parse(e.newValue); renderLibrary(); renderAdminPanel(); }
+            if (e.key === 'borrowHistory') { borrowHistory = JSON.parse(e.newValue); renderHistory(); }
+        });
+
+        // --- Auth ---
+        function handleLogin() {
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('password').value;
+            if (u === 'Admin' && p === 'Admin123') { currentUsername = u; isAdminUser = true; loginSuccess(); }
+            else if (u !== "") { currentUsername = u; isAdminUser = false; loginSuccess(); }
+            else alert("กรุณากรอก Username");
+        }
+
+        function loginSuccess() {
+            document.getElementById('user-name-display').innerText = currentUsername;
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('user-wrapper').style.display = 'block';
+            if (isAdminUser) {
+                document.getElementById('admin-nav').style.display = 'flex';
+                document.getElementById('history-title').innerText = "รายการหนังสือที่ถูกยืม (Admin)";
+            }
+            updateNewsUI(localStorage.getItem('library_news'));
+            renderLibrary(); renderAdminPanel(); renderHistory();
+        }
+
+        // --- News ---
+        function updateNews() {
+            const val = document.getElementById('news-input').value;
+            localStorage.setItem('library_news', val);
+            updateNewsUI(val);
+            alert("อัปเดตแล้ว");
+        }
+        function updateNewsUI(text) {
+            const b = document.getElementById('news-banner');
+            const d = document.getElementById('news-text-display');
+            if (text && text.trim() !== "") { d.innerText = text; b.style.display = 'block'; }
+            else b.style.display = 'none';
+        }
+
+        // --- Core Functions ---
+        function renderLibrary() {
+            const c = document.getElementById('book-display-grid'); c.innerHTML = '';
+            libraryBooks.forEach(book => {
+                const isOut = book.qty <= 0;
+                c.innerHTML += `<div class="book-card" onclick="${isOut ? '' : `goToBorrow(${book.id})`}" style="opacity:${isOut?0.6:1}">
+                    <small style="color:${isOut?'red':'green'}">● ${isOut?'หมด':'ว่าง '+book.qty+' เล่ม'}</small>
+                    <h3>${book.title}</h3><p>โดย: ${book.author}</p></div>`;
+            });
+        }
+
+        function renderAdminPanel() {
+            const t = document.getElementById('admin-book-list'); t.innerHTML = '';
+            libraryBooks.forEach((book, i) => {
+                t.innerHTML += `<tr><td>${book.title}</td><td>${book.author}</td>
+                <td><input type="number" class="login-input" style="width:70px; margin:0;" value="${book.qty}" onchange="saveStock(${i}, this.value)"></td></tr>`;
+            });
+        }
+
+        function saveStock(i, q) { libraryBooks[i].qty = parseInt(q); syncData(); renderLibrary(); }
+
+        function goToBorrow(id) {
+            currentSelectedBookId = id;
+            document.getElementById('display-book-title').innerText = libraryBooks[id].title;
+            document.getElementById('display-book-qty').innerText = libraryBooks[id].qty;
+            showPage('borrow');
+        }
+
+        function confirmBorrow() {
+            if(libraryBooks[currentSelectedBookId].qty > 0) {
+                libraryBooks[currentSelectedBookId].qty--;
+                borrowHistory.unshift({ username: currentUsername, bookTitle: libraryBooks[currentSelectedBookId].title, date: new Date().toLocaleString('th-TH') });
+                syncData();
+                alert("ยืมสำเร็จ!");
+                renderLibrary(); renderAdminPanel(); renderHistory(); showPage('home');
+            }
+        }
+
+        // --- ยืนยันคืนหนังสือ (Admin Only) ---
+        function returnBook(index) {
+            const record = borrowHistory[index];
+            // หาหนังสือใน List เพื่อเพิ่มสต็อกกลับคืน
+            const book = libraryBooks.find(b => b.title === record.bookTitle);
+            if(book) {
+                book.qty++;
+                borrowHistory.splice(index, 1); // ลบออกจากประวัติการยืม (ถือว่าคืนแล้ว)
+                syncData();
+                alert(`รับคืนหนังสือ "${record.bookTitle}" เรียบร้อย!`);
+                renderLibrary(); renderAdminPanel(); renderHistory();
+            }
+        }
+
+        function renderHistory() {
+            const c = document.getElementById('history-container'); c.innerHTML = '';
+            const list = isAdminUser ? borrowHistory : borrowHistory.filter(h => h.username === currentUsername);
+            if(list.length === 0) { c.innerHTML = '<p style="text-align:center;">ไม่มีข้อมูล</p>'; return; }
+            
+            list.forEach((h, i) => {
+                c.innerHTML += `<div class="history-item">
+                    <div><strong>${h.bookTitle}</strong><br><small>${isAdminUser?'ผู้ยืม: '+h.username:h.date}</small></div>
+                    <div style="text-align:right;">
+                        ${isAdminUser ? `<button class="btn-return" onclick="returnBook(${i})">ยืนยันคืนหนังสือ</button>` : `<small>${h.date}</small>`}
+                    </div>
+                </div>`;
+            });
+        }
+
+        function syncData() {
+            localStorage.setItem('books', JSON.stringify(libraryBooks));
+            localStorage.setItem('borrowHistory', JSON.stringify(borrowHistory));
+        }
+
+        function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+        function toggleLogoutPopup() { const m = document.getElementById('logout-menu'); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
+        function handleLogout() { location.reload(); }
+    </script>
+</body>
+</html>
