@@ -3,278 +3,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEST LIBRARY SYSTEM - Realtime Return System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Mali:wght@300;500&display=swap" rel="stylesheet">
+    <title>CAD Ultimate Shortcut & Commands Guide</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #e8e2d6;
-            --note-pink: #f2e1db;
-            --note-brown: #bca18e;
-            --note-grey: #c2b6a0;
-            --note-cream: #efe3d9;
-            --text-dark: #5d4a3e;
-            --news-yellow: #fdfd96;
-            --success-green: #a3b18a;
-        }
-
         body {
-            background-color: var(--bg-color);
-            background-image: radial-gradient(#bcbab3 1px, transparent 1px);
-            background-size: 25px 25px;
-            font-family: 'Mali', cursive;
-            color: var(--text-dark);
-            margin: 0; padding: 0; min-height: 100vh;
+            font-family: 'Sarabun', sans-serif;
+            background-color: #0f172a;
+            color: #f1f5f9;
         }
-
-        /* --- User Profile --- */
-        .user-menu-wrapper { position: fixed; top: 20px; right: 20px; z-index: 1000; display: none; }
-        #user-badge {
-            background: white; padding: 8px 15px; border: 1px solid var(--note-brown);
-            box-shadow: 4px 4px 0px var(--note-brown); cursor: pointer; font-weight: bold;
+        .tech-font {
+            font-family: 'Chakra Petch', sans-serif;
         }
-        .logout-popup {
-            position: absolute; top: 50px; right: 0; background: white; border: 1px solid var(--note-brown);
-            padding: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: none; min-width: 150px; text-align: center;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-
-        /* --- Board Layout --- */
-        .board { max-width: 950px; margin: 40px auto; background: rgba(255, 255, 255, 0.4); padding: 40px; border-radius: 10px; min-height: 80vh; position: relative; }
-        
-        /* --- News Banner --- */
-        #news-banner {
-            background: var(--news-yellow); padding: 12px 25px; margin: -20px auto 30px auto;
-            max-width: 80%; text-align: center; box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
-            transform: rotate(-1deg); border: 1px dashed #bca18e; display: none; font-weight: 500;
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
         }
-
-        /* --- UI Components --- */
-        .nav-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; }
-        .nav-note { width: 130px; height: 130px; padding: 10px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold; background-color: var(--note-cream); position: relative; transition: 0.3s; }
-        .nav-note:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 5; }
-        
-        .page { display: none; animation: fadeIn 0.4s ease; }
-        .page.active { display: block; }
-        
-        .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .book-card { background: white; padding: 20px; border-left: 5px solid var(--note-brown); box-shadow: 3px 3px 10px rgba(0,0,0,0.05); cursor: pointer; }
-        
-        .admin-table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
-        .admin-table th, .admin-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        
-        /* --- History Styles --- */
-        .history-item { background: white; padding: 15px; margin-bottom: 10px; border-bottom: 2px solid var(--note-pink); display: flex; justify-content: space-between; align-items: center; }
-        .btn-return { background: var(--success-green); color: white; border: none; padding: 5px 10px; cursor: pointer; font-family: 'Mali'; border-radius: 4px; }
-
-        .btn-main { background: var(--note-brown); color: white; border: none; padding: 12px 20px; width: 100%; cursor: pointer; font-family: 'Mali'; margin-top: 10px; font-size: 1.1rem; }
-        .login-card { background: white; padding: 50px; max-width: 400px; margin: 100px auto; text-align: center; box-shadow: 15px 15px 0px var(--note-grey); border: 2px solid var(--note-brown); }
-        .login-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; font-family: 'Mali'; box-sizing: border-box; font-size: 1rem; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0ea5e9;
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+        }
+        .glow-orange {
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.15);
+        }
+        .card-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-transition:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -10px rgba(14, 165, 233, 0.3);
+        }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 
-    <section id="login-page">
-        <div class="login-card">
-            <h1 style="font-family: 'Dancing Script'; font-size: 3.5rem; margin: 0 0 10px 0;">TEST LIBRARY</h1>
-            <p style="margin-bottom: 30px;">Library Management System</p>
-            <input type="text" id="username" class="login-input" placeholder="Username">
-            <input type="password" id="password" class="login-input" placeholder="Password">
-            <button class="btn-main" onclick="handleLogin()">เข้าสู่ระบบ</button>
-        </div>
-    </section>
-
-    <div class="user-menu-wrapper" id="user-wrapper">
-        <div id="user-badge" onclick="toggleLogoutPopup()">
-            👤 <span id="user-name-display"></span> ▼
-        </div>
-        <div class="logout-popup" id="logout-menu">
-            <button class="btn-main" style="background:#d68c8c; margin:0; padding: 5px;" onclick="handleLogout()">ออกจากระบบ</button>
-        </div>
-    </div>
-
-    <div class="board" id="main-content" style="display: none;">
-        <header style="text-align:center;"><h1 style="font-family: 'Dancing Script'; font-size: 3.5rem;">TEST LIBRARY SYSTEM</h1></header>
-
-        <div id="news-banner"><strong>📢 ประกาศ:</strong> <span id="news-text-display"></span></div>
-
-        <nav class="nav-container">
-            <div class="nav-note" style="background: var(--note-pink); transform: rotate(-2deg);" onclick="showPage('home')">หน้าแรก / ค้นหา</div>
-            <div class="nav-note" style="background: var(--note-grey); transform: rotate(1deg);" onclick="showPage('history')">ประวัติการยืม</div>
-            <div id="admin-nav" class="nav-note" style="background: #fdfd96; transform: rotate(-1deg); display:none;" onclick="showPage('admin')">⚙️ จัดการระบบ</div>
-            <div class="nav-note" style="background: var(--note-cream); transform: rotate(1.5deg);" onclick="showPage('about')">เกี่ยวกับเรา</div>
-        </nav>
-
-        <section id="home" class="page active">
-            <input type="text" class="login-input" placeholder="🔍 ค้นหาหนังสือ..." style="margin-bottom:30px;">
-            <div id="book-display-grid" class="book-grid"></div>
-        </section>
-
-        <section id="admin" class="page">
-            <h2 style="border-bottom: 2px solid var(--note-brown);">Admin Dashboard</h2>
-            <div style="background: #fff; padding: 20px; margin-bottom: 30px; border: 1px dashed var(--note-brown);">
-                <h3>🆕 แจ้งข่าวหน้าเว็บ</h3>
-                <input type="text" id="news-input" class="login-input" placeholder="พิมพ์ข่าวใหม่...">
-                <button class="btn-main" style="background: #a3b18a;" onclick="updateNews()">อัปเดตประกาศ</button>
+    <!-- Header Section -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-tr from-cyan-500 to-blue-600 p-2.5 rounded-lg text-white shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid fa-compass-drafting text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight tech-font text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">
+                        CAD Keyboard Commands
+                    </h1>
+                    <p class="text-xs text-slate-400">คู่มือกราฟิกและคีย์ลัดอ้างอิงจาก CAD Guide</p>
+                </div>
             </div>
-            <h3>📚 จัดการจำนวนหนังสือ</h3>
-            <table class="admin-table">
-                <thead><tr><th>ชื่อหนังสือ</th><th>ผู้แต่ง</th><th>จำนวนสต็อก</th></tr></thead>
-                <tbody id="admin-book-list"></tbody>
-            </table>
-        </section>
+            
+            <!-- Quick Search -->
+            <div class="relative w-full sm:w-72">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input type="text" id="searchInput" oninput="searchCommands()" placeholder="ค้นหาคำสั่ง คีย์ลัด หรือหน้าที่..." class="w-full bg-slate-950/80 text-slate-100 placeholder-slate-500 text-sm rounded-lg border border-slate-700 pl-10 pr-4 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+            </div>
+        </div>
+    </header>
 
-        <section id="borrow" class="page">
-            <button class="btn-main" style="width:auto;" onclick="showPage('home')">← กลับ</button>
-            <div style="background:white; padding:30px; border:1px solid #ddd; max-width:500px; margin:20px auto; text-align:center;">
-                <h2>ใบคำร้องยืมหนังสือ</h2>
-                <h3 id="display-book-title"></h3>
-                <p>คงเหลือ: <span id="display-book-qty"></span> เล่ม</p>
-                <button class="btn-main" onclick="confirmBorrow()">ยืนยันการยืม</button>
+    <!-- Main Workspace -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        
+        <!-- Category Navigation & Legend -->
+        <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/40 p-4 rounded-xl border border-slate-800">
+            <div class="flex flex-wrap gap-2" id="categoryFilters">
+                <button onclick="filterCategory('all')" class="cat-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-cyan-500 text-slate-950 active" data-cat="all">
+                    ทั้งหมด
+                </button>
+                <button onclick="filterCategory('draw')" class="cat-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700" data-cat="draw">
+                    <i class="fa-solid fa-pen-nib mr-1.5 text-cyan-400"></i> เขียนแบบ (Draw)
+                </button>
+                <button onclick="filterCategory('modify')" class="cat-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700" data-cat="modify">
+                    <i class="fa-solid fa-scissors mr-1.5 text-orange-400"></i> แก้ไข (Modify)
+                </button>
+                <button onclick="filterCategory('view')" class="cat-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700" data-cat="view">
+                    <i class="fa-solid fa-arrows-to-eye mr-1.5 text-emerald-400"></i> มุมมอง (View/Dimension)
+                </button>
+                <button onclick="filterCategory('sys')" class="cat-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700" data-cat="sys">
+                    <i class="fa-solid fa-gears mr-1.5 text-purple-400"></i> ระบบ/ฟังก์ชัน (Utility)
+                </button>
+            </div>
+            <div class="text-xs text-slate-400 flex items-center gap-3">
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>เขียนแบบ</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-orange-400"></span>แก้ไขวัตถุ</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>มิติ/มุมมอง</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>ระบบหลัก</span>
+            </div>
+        </div>
+
+        <!-- Interactive Visual Diagrams Section -->
+        <section class="mb-12">
+            <h2 class="text-lg font-bold tech-font mb-4 text-slate-300 flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-cyan-400"></i> ไดอะแกรมหลักการทำงานยอดนิยม (Interactive Visual Concepts)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Concept 1: Trim & Extend -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 glow-cyan flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-semibold px-2 py-0.5 bg-orange-500/10 text-orange-400 rounded-md border border-orange-500/20">แก้ไขวัตถุ</span>
+                            <div class="flex gap-2">
+                                <span class="bg-slate-950 px-2 py-1 rounded text-xs font-mono font-bold text-cyan-400">TR</span>
+                                <span class="bg-slate-950 px-2 py-1 rounded text-xs font-mono font-bold text-cyan-400">EX</span>
+                            </div>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-100 mb-2">TRIM & EXTEND (ตัดและยืดเส้น)</h3>
+                        <p class="text-xs text-slate-400 mb-4">ตัดแบ่งส่วนที่ไม่ต้องการ หรือยืดระยะของเส้นปัจจุบันไปหาเส้นแนวระนาบอ้างอิง</p>
+                    </div>
+                    <!-- Vector Graphic Display -->
+                    <div class="bg-slate-955 rounded-lg border border-slate-800 p-4 h-36 flex items-center justify-center relative overflow-hidden bg-slate-950">
+                        <svg class="w-full h-full" viewBox="0 0 200 100">
+                            <!-- Boundary line -->
+                            <line x1="140" y1="10" x2="140" y2="90" stroke="#f43f5e" stroke-width="2" stroke-dasharray="3,3" />
+                            <text x="145" y="20" fill="#f43f5e" font-size="6" font-family="sans-serif">ขอบเขตอ้างอิง</text>
+                            
+                            <!-- Trim Line -->
+                            <line x1="20" y1="30" x2="160" y2="30" stroke="#0ea5e9" stroke-width="2" />
+                            <circle cx="150" cy="30" r="4" fill="none" stroke="#ef4444" stroke-width="1.5" />
+                            <line x1="146" y1="26" x2="154" y2="34" stroke="#ef4444" stroke-width="1.5" />
+                            <line x1="154" y1="26" x2="146" y2="34" stroke="#ef4444" stroke-width="1.5" />
+                            <text x="30" y="25" fill="#94a3b8" font-size="6">TRIM (ตัดส่วนเกินออก)</text>
+
+                            <!-- Extend Line -->
+                            <line x1="20" y1="70" x2="100" y2="70" stroke="#10b981" stroke-width="2" />
+                            <line x1="100" y1="70" x2="140" y2="70" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2" class="animate-pulse" />
+                            <path d="M 135 67 L 140 70 L 135 73 Z" fill="#10b981" />
+                            <text x="30" y="65" fill="#94a3b8" font-size="6">EXTEND (ยืดเส้นไปต่อชน)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Concept 2: Fillet & Chamfer -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 glow-cyan flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-semibold px-2 py-0.5 bg-orange-500/10 text-orange-400 rounded-md border border-orange-500/20">แก้ไขวัตถุ</span>
+                            <div class="flex gap-2">
+                                <span class="bg-slate-950 px-2 py-1 rounded text-xs font-mono font-bold text-cyan-400">F</span>
+                                <span class="bg-slate-950 px-2 py-1 rounded text-xs font-mono font-bold text-cyan-400">CHA</span>
+                            </div>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-100 mb-2">FILLET & CHAMFER (ทำมุมโค้ง/มุมเฉียง)</h3>
+                        <p class="text-xs text-slate-400 mb-4">ปรับแต่งมุมฉากเหลี่ยมให้มีความโค้งมนสวยงาม (Fillet) หรือทำมุมลบเหลี่ยมแนวระนาบเอียง (Chamfer)</p>
+                    </div>
+                    <!-- Vector Graphic Display -->
+                    <div class="bg-slate-955 rounded-lg border border-slate-800 p-4 h-36 flex items-center justify-center relative overflow-hidden bg-slate-950">
+                        <svg class="w-full h-full" viewBox="0 0 200 100">
+                            <!-- Left: Fillet -->
+                            <path d="M 20 20 L 60 20" stroke="#475569" stroke-width="1.5" stroke-dasharray="2,2" />
+                            <path d="M 80 40 L 80 80" stroke="#475569" stroke-width="1.5" stroke-dasharray="2,2" />
+                            <!-- Corner target -->
+                            <line x1="60" y1="20" x2="80" y2="20" stroke="#ef4444" stroke-width="1" stroke-dasharray="1,1" />
+                            <line x1="80" y1="20" x2="80" y2="40" stroke="#ef4444" stroke-width="1" stroke-dasharray="1,1" />
+                            <!-- Final Arc -->
+                            <path d="M 20 20 L 60 20 A 20 20 0 0 1 80 40 L 80 80" stroke="#0ea5e9" stroke-width="2" fill="none" />
+                            <text x="25" y="75" fill="#0ea5e9" font-size="8" font-weight="bold">FILLET (โค้ง R)</text>
+
+                            <!-- Right: Chamfer -->
+                            <path d="M 120 20 L 160 20" stroke="#475569" stroke-width="1.5" stroke-dasharray="2,2" />
+                            <path d="M 180 40 L 180 80" stroke="#475569" stroke-width="1.5" stroke-dasharray="2,2" />
+                            <!-- Corner target -->
+                            <line x1="160" y1="20" x2="180" y2="20" stroke="#ef4444" stroke-width="1" stroke-dasharray="1,1" />
+                            <line x1="180" y1="20" x2="180" y2="40" stroke="#ef4444" stroke-width="1" stroke-dasharray="1,1" />
+                            <!-- Final Line -->
+                            <path d="M 120 20 L 160 20 L 180 40 L 180 80" stroke="#f97316" stroke-width="2" fill="none" />
+                            <text x="125" y="75" fill="#f97316" font-size="8" font-weight="bold">CHAMFER (เฉียง)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Concept 3: Polar & Ortho Mode -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 glow-cyan flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-semibold px-2 py-0.5 bg-purple-500/10 text-purple-400 rounded-md border border-purple-500/20">ระบบหน้างาน</span>
+                            <div class="flex gap-2">
+                                <span class="bg-slate-950 px-2 py-1 rounded text-xs font-mono font-bold text-cyan-400">F8</span>
+                                <span class="bg-slate-950 px-2 py-1 rounded text-xs font-mono font-bold text-cyan-400">F10</span>
+                            </div>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-100 mb-2">ORTHO vs POLAR TRACKING</h3>
+                        <p class="text-xs text-slate-400 mb-4">บังคับแนวลากเส้น: ล็อกทิศทางมุมฉากแนวตั้ง-แนวนอน 90° (Ortho) หรือลากกะระยะองศาอิสระยอดนิยม (Polar)</p>
+                    </div>
+                    <!-- Vector Graphic Display -->
+                    <div class="bg-slate-955 rounded-lg border border-slate-800 p-4 h-36 flex items-center justify-center relative overflow-hidden bg-slate-950">
+                        <svg class="w-full h-full" viewBox="0 0 200 100">
+                            <!-- Ortho Cross -->
+                            <line x1="50" y1="50" x2="50" y2="15" stroke="#ef4444" stroke-width="1.5" />
+                            <line x1="50" y1="50" x2="85" y2="50" stroke="#ef4444" stroke-width="1.5" />
+                            <line x1="50" y1="50" x2="50" y2="85" stroke="#475569" stroke-width="1" stroke-dasharray="2,2" />
+                            <line x1="50" y1="50" x2="15" y2="50" stroke="#475569" stroke-width="1" stroke-dasharray="2,2" />
+                            <rect x="50" y="42" width="8" height="8" fill="none" stroke="#ef4444" stroke-width="1" />
+                            <text x="18" y="25" fill="#e2e8f0" font-size="7">Ortho [F8] ล็อก 90°</text>
+
+                            <!-- Polar Angel -->
+                            <circle cx="150" cy="50" r="30" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2,2" />
+                            <line x1="150" y1="50" x2="180" y2="50" stroke="#475569" stroke-width="1" />
+                            <line x1="150" y1="50" x2="171.2" y2="28.8" stroke="#10b981" stroke-width="2" />
+                            <path d="M 165 50 A 15 15 0 0 0 160.6 39.4" fill="none" stroke="#10b981" stroke-width="1" />
+                            <text x="162" y="45" fill="#10b981" font-size="6">45°</text>
+                            <text x="122" y="25" fill="#e2e8f0" font-size="7">Polar [F10] ตามองศา</text>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="history" class="page">
-            <h2 id="history-title">ประวัติการยืม</h2>
-            <div id="history-container"></div>
+        <!-- Command Cards Grid Grid -->
+        <section>
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold tech-font text-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-cyan-400"></i> รายการคำสั่งคีย์ลัดแบ่งตามการใช้งาน (Commands Directory)
+                </h2>
+                <div class="text-sm text-slate-400">
+                    พบทั้งหมด <span id="matchCount" class="text-cyan-400 font-bold tech-font">0</span> รายการ
+                </div>
+            </div>
+
+            <!-- Commands Container -->
+            <div id="commandsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Javascript will render cards here dynamically -->
+            </div>
         </section>
 
-        <section id="about" class="page">
-            <div style="text-align: center; padding: 40px;"><h2>เกี่ยวกับเรา</h2><p>TEST LIBRARY SYSTEM ยินดีให้บริการ</p></div>
-        </section>
-    </div>
+    </main>
 
+    <!-- Bottom Statistics/Footer Banner -->
+    <footer class="mt-auto border-t border-slate-800 bg-slate-950 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-slate-500">
+                CAD Command Center | พัฒนาขึ้นใหม่เพื่อสนับสนุนบุคลากรวิศวกรรมและการเขียนแบบสถาปัตยกรรมไทย
+            </p>
+            <div class="flex gap-4 text-xs text-slate-400">
+                <span class="hover:text-cyan-400 transition-colors cursor-pointer"><i class="fa-solid fa-book-open mr-1"></i> คู่มืออ้างอิงฉบับเต็ม</span>
+                <span>|</span>
+                <span class="hover:text-cyan-400 transition-colors cursor-pointer"><i class="fa-solid fa-file-pdf mr-1"></i> ดาวน์โหลด PDF</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JS Logic -->
     <script>
-        // --- Data ---
-        const DEFAULT_BOOKS = [
-            { id: 0, title: "ศิลปะของการปล่อยวาง", author: "ใจดี", qty: 5 },
-            { id: 1, title: "เรียนรู้ HTML ใน 1 วัน", author: "Code Master", qty: 2 },
-            { id: 2, title: "จิตวิทยาสายดาร์ก", author: "Dr. Dark", qty: 0 }
+        // Database of all CAD commands and shortcuts from Autodesk Keyboard Guide
+        const commandsData = [
+            // DRAW CATEGORY
+            { shortcut: "A", name: "ARC", category: "draw", desc: "สร้างเส้นโค้งในแบบอ้างอิงจุดกำหนด", tip: "กำหนดทิศทางแบบตามเข็มนาฬิกาได้ด้วยการกด Ctrl" },
+            { shortcut: "C", name: "CIRCLE", category: "draw", desc: "สร้างวงกลมโดยระบุรัศมีหรือเส้นผ่านศูนย์กลาง", tip: "ใช้ตัวเลือกย่อย 2P หรือ 3P เพื่อสร้างวงกลมสัมผัสกับจุดกำหนด" },
+            { shortcut: "L", name: "LINE", category: "draw", desc: "สร้างกลุ่มเส้นตรงธรรมดาเดี่ยวเชื่อมต่อไปเรื่อยๆ", tip: "กดพิกัดแกนอ้างอิงฉากด้วยการคีย์ระบุความยาวเส้น" },
+            { shortcut: "PL", name: "PLINE", category: "draw", desc: "สร้างเส้นต่อเนื่อง (Polyline) ทั้งเส้นตรงและส่วนโค้งเป็นชิ้นเดียว", tip: "เหมาะอย่างยิ่งสำหรับเขียนผนังอาคารหรือพื้นที่คำนวณงานระบบ" },
+            { shortcut: "PO", name: "POINT", category: "draw", desc: "จุดพิกัดในงานเขียนแบบสถาปัตย์หรือระบุขอบเขต", tip: "ตั้งค่ารูปแบบไอคอนจุดได้ด้วยคำสั่ง DDPTYPE" },
+            { shortcut: "BO", name: "BOUNDARY", category: "draw", desc: "สร้างเส้นโพลีไลน์แบบปิดล้อมรอบตามขอบเขตพื้นที่ว่าง", tip: "นิยมใช้เตรียมความพร้อมพื้นที่เพื่อคำนวณเนื้อหาพิกัดพื้นที่" },
+            { shortcut: "H", name: "HATCH", category: "draw", desc: "ถมลวดลายทางวัสดุก่อสร้างลงไปในขอบเขตหรือเส้นปิด", tip: "ปรับระดับทิศทางมุมลวดลายและระยะห่างได้ที่หน้าต่าง Properties" },
+            { shortcut: "T / MT", name: "MTEXT", category: "draw", desc: "พิมพ์เขียนอักษรข้อความบรรยายแบบฟอร์มขนาดใหญ่", tip: "เหมือนกับการทำงานจัดวางอาร์ตเวิร์ก มีเครื่องมือจัดแต่งครบครัน" },
+            
+            // MODIFY CATEGORY
+            { shortcut: "AL", name: "ALIGN", category: "modify", desc: "จัดระเบียบวางแนวย้ายและสลับสเกลมุมของชิ้นงานวัตถุ", tip: "คีย์ลัดยอดฮิตช่วยทาบขนาดชิ้นงานเฟอร์นิเจอร์ให้ลงล็อกพอดี" },
+            { shortcut: "AR", name: "ARRAY", category: "modify", desc: "ทำสำเนาคัดลอกวัตถุเพิ่มเป็นจำนวนแถวหรือวงกลมตามระยะห่าง", tip: "ใช้ทำโต๊ะประชุมล้อมวงกลม เสาเข็มแนวราบ หรือขั้นบันไดได้ดี" },
+            { shortcut: "BR", name: "BREAK", category: "modify", desc: "ตัดแยกแบ่งเส้นสายวัตถุออกเป็นท่อนๆ หรือระเบิดตรงกลางออก", tip: "ใช้ลบเว้นช่องสัญลักษณ์ประตูหรือช่องระบายอากาศบนแบบแปลน" },
+            { shortcut: "CHA", name: "CHAMFER", category: "modify", desc: "บากขอบฉากให้เฉียงลงตัว", tip: "ระบุระนาบความยาวแกนเฉียงด้านที่ 1 และ 2 ก่อนดำเนินการ" },
+            { shortcut: "CO / CP", name: "COPY", category: "modify", desc: "คัดลอกจัดทำสำเนาโมเดลวัตถุออกไปเพิ่มกี่ชุดก็ได้", tip: "ระบุจุดเริ่มคลิกจับยกแบบ (Base point) ให้แม่นยำ" },
+            { shortcut: "E", name: "ERASE", category: "modify", desc: "ลบวัตถุที่เลือกทิ้งทันทีออกไปจากหน้าจอแบบ", tip: "ใช้ปุ่ม Delete บนคีย์บอร์ดก็ให้ผลลัพธ์แบบเดียวกัน" },
+            { shortcut: "EX", name: "EXTEND", category: "modify", desc: "ยืดความยาวปลายของกลุ่มเส้นไปจดชนชิ้นงานแนวอ้างอิงตรงข้าม", tip: "กด Shift ค้างไว้ขณะใช้งานคำสั่งนี้จะเปลี่ยนเป็นคำสั่ง TRIM ทันที" },
+            { shortcut: "TR", name: "TRIM", category: "modify", desc: "ตัดเฉือนปลายชิ้นส่วนวัตถุส่วนที่ยื่นเกินขอบอ้างอิงออกไป", tip: "กด Shift ค้างเพื่อเปลี่ยนสลับเป็นคำสั่งยืดความยาวเส้น (EXTEND)" },
+            { shortcut: "X", name: "EXPLODE", category: "modify", desc: "ระเบิดสลายวัตถุกลุ่มที่ถูกผูกติดกัน (เช่น Block หรือ Polyline) ออกจากกัน", tip: "ระวังการระเบิดกลุ่มบอกขนาด (Dimension) เพราะจะทำระบบวัดเพี้ยน" },
+            { shortcut: "F", name: "FILLET", category: "modify", desc: "แต่งลบเหลี่ยมแนวระนาบฉากให้โค้งมนเรียบหรูตามต้องการ", tip: "หากต้องการลบมุมให้หักศอกฉากเป็นศูนย์ ให้ระบุค่ารัศมี R = 0" },
+            { shortcut: "M", name: "MOVE", category: "modify", desc: "เคลื่อนย้ายกลุ่มชิ้นงานแปลนไปยังจุดใหม่", tip: "สามารถย้ายในระนาบที่ตรงฉากฉับพลันได้ด้วย Ortho mode F8" },
+            { shortcut: "MA", name: "MATCHPROP", category: "modify", desc: "ก็อปปี้และดูดคุณสมบัติต้นแบบ (เช่น สี เลเยอร์ เส้นหนา) ไปทาบใส่อีกตัว", tip: "ช่วยลดเวลาจัดการงานเอกสารและจัดกลุ่มระเบียบสีแบบเขียน" },
+            { shortcut: "MI", name: "MIRROR", category: "modify", desc: "คัดลอกโคลนนิ่งชิ้นงานพลิกสะท้อนอีกด้านด้วยแนวระนาบกระจก", tip: "เหมาะอย่างยิ่งสำหรับงานวาดประตูบานคู่ หรือแนวผนังซ้ายขวาที่สมมาตรกัน" },
+            { shortcut: "O", name: "OFFSET", category: "modify", desc: "คัดลอกก๊อปปี้ขนานห่างแบบสม่ำเสมอตามสัดส่วนระยะทาง", tip: "หัวใจหลักของการวาดเสา และแนวความหนาของโครงสร้างกำแพงอาคาร" },
+            { shortcut: "PE", name: "PEDIT", category: "modify", desc: "คำสั่งชั้นยอดปรับปรุงแก้ไขและรวมกลุ่มแนวเส้นตรงให้กลายเป็นโพลีไลน์", tip: "ใช้ตัวเลือกย่อย 'Join' เพื่อรวบรวมต่อเชื่อมปลายเส้นสลักเปิดเข้าหากัน" },
+            { shortcut: "RO", name: "ROTATE", category: "modify", desc: "หมุนทำมุมองศารอบวัตถุหลักอ้างอิงแกนหมุน", tip: "ระบุพารามิเตอร์ Reference เพื่อปรับความเอียงตามแนวเส้นอื่นที่มีอยู่" },
+            { shortcut: "S", name: "STRETCH", category: "modify", desc: "ยืด ขยาย หด ย่อส่วนของแบบให้กว้างยาวขึ้นตามหน้างานสถาปัตย์", tip: "ต้องใช้การคลิกเลือกพื้นที่ครอบคลุมแบบมุมขวาล่างไปซ้ายบน (Crossing Window) เท่านั้น" },
+            { shortcut: "SC", name: "SCALE", category: "modify", desc: "เพิ่มลดอัตราส่วนของชิ้นงานโมเดลให้สมดุลแบบมีระบบ", tip: "ตั้งค่าแบบระบุความกว้างอ้างอิง (Reference) เพื่อปรับทาบชิ้นงานขนาดจริง" },
+
+            // VIEW & DIMENSION CATEGORY
+            { shortcut: "D", name: "DIMSTYLE", category: "view", desc: "หน้าต่างแผงควบคุมปรับแต่งรูปแบบขนาดตัวหนังสือและปลายเส้นลูกศร", tip: "ช่วยออกแบบขนาดหัวลูกศรให้เหมาะสมกับขนาดสเกลแบบพิมพ์พิมพ์แปลน" },
+            { shortcut: "DI", name: "DIST", category: "view", desc: "เครื่องมือวัดตรวจสอบระยะห่างพิกัดจุดต่อจุด", tip: "เช็กระยะห่างโดยไม่ทิ้งรอยเส้นบอกขนาดเพื่อรักษาพื้นที่สะอาดตา" },
+            { shortcut: "DIV", name: "DIVIDE", category: "view", desc: "แบ่งสัดส่วนระยะห่างวัตถุตามตัวเลขสัดส่วนอย่างเท่าเทียม", tip: "ใช้หารระยะแนวติดตั้งโคมไฟเพดานหรือซี่รั้วกำแพงให้ห่างเท่ากัน" },
+            { shortcut: "UN", name: "UNITS", category: "view", desc: "หน้าต่างจัดรูปแบบตั้งค่าหน่วยมาตราส่วนที่เขียน (เช่น เมตร มิลลิเมตร ฟุต)", tip: "ควรจัดแจงตั้งค่านี้เป็นอันดับแรกก่อนเริ่มกระบวนการสเก็ตช์ภาพแรก" },
+            { shortcut: "Z", name: "ZOOM", category: "view", desc: "ควบคุมความกว้างระดับเลนส์สายตาหน้าจอหลัก", tip: "พิมพ์คำสั่งคีย์ย่อ Z ตามด้วยปุ่ม E เพื่อจัดแสดงภาพรวมแบบทั้งหมดที่มีบนเลนส์กล้องงาน" },
+
+            // UTILITY & SYSTEM CATEGORY
+            { shortcut: "F3", name: "OSNAP (Toggle)", category: "sys", desc: "เปิดปิดโหมดช่วยล็อกแนวพิกัดแม่เหล็กสัมผัสชิ้นงาน (เช่น ปลายจุด ปลายโค้ง จุดกึ่งกลาง)", tip: "ช่วยลดความผิดพลาดเส้นหลุดแนวจากการเขียนด้วยสายตาเปล่า" },
+            { shortcut: "F8", name: "ORTHO (Toggle)", category: "sys", desc: "ล็อกแนวทิศทางการลากเส้นให้วิ่งเฉพาะแกนมุมฉาก 90 องศาแนวตั้งแนวนอนเท่านั้น", tip: "หัวใจการวาดงานผังโครงสร้างที่ต้องการความแน่นอนเรื่องเส้นตั้งฉาก" },
+            { shortcut: "F10", name: "POLAR (Toggle)", category: "sys", desc: "ช่วยแนะแนวเส้นลากทำมุมตามพารามิเตอร์แกนองศาที่กำหนด", tip: "ทางเลือกการทำงานที่คล่องตัวสูงกว่า Ortho Mode เพราะวาดมุมเฉียงได้รวดเร็ว" },
+            { shortcut: "Ctrl + 1", name: "PROPERTIES", category: "sys", desc: "เปิดปิดแท็บแผงควบคุมเช็กคุณสมบัติทางวิศวกรรมของวัตถุทุกประเภท", tip: "ใช้ปรับแก้ชื่อเลเยอร์ เปลี่ยนแปลงสี หรือระยะความหนาเส้นได้อย่างรวดเร็ว" },
+            { shortcut: "Ctrl + 8", name: "QUICKCALC", category: "sys", desc: "เรียกคืนแสดงหน้าปัดเครื่องคิดเลขทางคณิตศาสตร์และวิชาเรขาคณิตอัจฉริยะ", tip: "สามารถคำนวณและแปลงหน่วยฟุต-นิ้ว เป็นเซนติเมตร-เมตรได้ทันทีในหน้างาน" },
+            { shortcut: "Ctrl + 9", name: "COMMAND LINE", category: "sys", desc: "แสดงหรือซ่อนแถบกระดานพิมข้อความคำสั่งหลักด้านล่าง", tip: "หากเผลอกดปิดแถบพิมหายไป สามารถกดปุ่มนี้เพื่อเรียกแถบเดิมคืนมาได้ทันที" },
+            { shortcut: "Ctrl + Shift + C", name: "COPYWITHBASE", category: "sys", desc: "คำสั่งพิเศษระดับมืออาชีพ คัดลอกชิ้นงานจากแบบหนึ่งไปวางอีกแบบโดยจับพิกัดอ้างอิงคงเดิม", tip: "ปุ่มคีย์ลัดที่ช่วยคัดลอกตำแหน่งชิ้นงานแปลนชั้น 1 ไปทับพิกัดเดียวกันในแบบชั้น 2 ได้ตรงเป๊ะ" }
         ];
 
-        let libraryBooks = JSON.parse(localStorage.getItem('books')) || DEFAULT_BOOKS;
-        let borrowHistory = JSON.parse(localStorage.getItem('borrowHistory')) || [];
-        let currentUsername = "";
-        let isAdminUser = false;
-
-        // --- Real-time Sync ---
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'library_news') updateNewsUI(e.newValue);
-            if (e.key === 'books') { libraryBooks = JSON.parse(e.newValue); renderLibrary(); renderAdminPanel(); }
-            if (e.key === 'borrowHistory') { borrowHistory = JSON.parse(e.newValue); renderHistory(); }
-        });
-
-        // --- Auth ---
-        function handleLogin() {
-            const u = document.getElementById('username').value.trim();
-            const p = document.getElementById('password').value;
-            if (u === 'Admin' && p === 'Admin123') { currentUsername = u; isAdminUser = true; loginSuccess(); }
-            else if (u !== "") { currentUsername = u; isAdminUser = false; loginSuccess(); }
-            else alert("กรุณากรอก Username");
-        }
-
-        function loginSuccess() {
-            document.getElementById('user-name-display').innerText = currentUsername;
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('user-wrapper').style.display = 'block';
-            if (isAdminUser) {
-                document.getElementById('admin-nav').style.display = 'flex';
-                document.getElementById('history-title').innerText = "รายการหนังสือที่ถูกยืม (Admin)";
-            }
-            updateNewsUI(localStorage.getItem('library_news'));
-            renderLibrary(); renderAdminPanel(); renderHistory();
-        }
-
-        // --- News ---
-        function updateNews() {
-            const val = document.getElementById('news-input').value;
-            localStorage.setItem('library_news', val);
-            updateNewsUI(val);
-            alert("อัปเดตแล้ว");
-        }
-        function updateNewsUI(text) {
-            const b = document.getElementById('news-banner');
-            const d = document.getElementById('news-text-display');
-            if (text && text.trim() !== "") { d.innerText = text; b.style.display = 'block'; }
-            else b.style.display = 'none';
-        }
-
-        // --- Core Functions ---
-        function renderLibrary() {
-            const c = document.getElementById('book-display-grid'); c.innerHTML = '';
-            libraryBooks.forEach(book => {
-                const isOut = book.qty <= 0;
-                c.innerHTML += `<div class="book-card" onclick="${isOut ? '' : `goToBorrow(${book.id})`}" style="opacity:${isOut?0.6:1}">
-                    <small style="color:${isOut?'red':'green'}">● ${isOut?'หมด':'ว่าง '+book.qty+' เล่ม'}</small>
-                    <h3>${book.title}</h3><p>โดย: ${book.author}</p></div>`;
-            });
-        }
-
-        function renderAdminPanel() {
-            const t = document.getElementById('admin-book-list'); t.innerHTML = '';
-            libraryBooks.forEach((book, i) => {
-                t.innerHTML += `<tr><td>${book.title}</td><td>${book.author}</td>
-                <td><input type="number" class="login-input" style="width:70px; margin:0;" value="${book.qty}" onchange="saveStock(${i}, this.value)"></td></tr>`;
-            });
-        }
-
-        function saveStock(i, q) { libraryBooks[i].qty = parseInt(q); syncData(); renderLibrary(); }
-
-        function goToBorrow(id) {
-            currentSelectedBookId = id;
-            document.getElementById('display-book-title').innerText = libraryBooks[id].title;
-            document.getElementById('display-book-qty').innerText = libraryBooks[id].qty;
-            showPage('borrow');
-        }
-
-        function confirmBorrow() {
-            if(libraryBooks[currentSelectedBookId].qty > 0) {
-                libraryBooks[currentSelectedBookId].qty--;
-                borrowHistory.unshift({ username: currentUsername, bookTitle: libraryBooks[currentSelectedBookId].title, date: new Date().toLocaleString('th-TH') });
-                syncData();
-                alert("ยืมสำเร็จ!");
-                renderLibrary(); renderAdminPanel(); renderHistory(); showPage('home');
-            }
-        }
-
-        // --- ยืนยันคืนหนังสือ (Admin Only) ---
-        function returnBook(index) {
-            const record = borrowHistory[index];
-            // หาหนังสือใน List เพื่อเพิ่มสต็อกกลับคืน
-            const book = libraryBooks.find(b => b.title === record.bookTitle);
-            if(book) {
-                book.qty++;
-                borrowHistory.splice(index, 1); // ลบออกจากประวัติการยืม (ถือว่าคืนแล้ว)
-                syncData();
-                alert(`รับคืนหนังสือ "${record.bookTitle}" เรียบร้อย!`);
-                renderLibrary(); renderAdminPanel(); renderHistory();
-            }
-        }
-
-        function renderHistory() {
-            const c = document.getElementById('history-container'); c.innerHTML = '';
-            const list = isAdminUser ? borrowHistory : borrowHistory.filter(h => h.username === currentUsername);
-            if(list.length === 0) { c.innerHTML = '<p style="text-align:center;">ไม่มีข้อมูล</p>'; return; }
+        // Render Cards Function
+        function renderCards(data) {
+            const grid = document.getElementById('commandsGrid');
+            const matchCount = document.getElementById('matchCount');
+            grid.innerHTML = '';
             
-            list.forEach((h, i) => {
-                c.innerHTML += `<div class="history-item">
-                    <div><strong>${h.bookTitle}</strong><br><small>${isAdminUser?'ผู้ยืม: '+h.username:h.date}</small></div>
-                    <div style="text-align:right;">
-                        ${isAdminUser ? `<button class="btn-return" onclick="returnBook(${i})">ยืนยันคืนหนังสือ</button>` : `<small>${h.date}</small>`}
+            if (data.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-500">
+                        <i class="fa-regular fa-folder-open text-5xl mb-3 block"></i>
+                        <p class="text-base font-semibold">ไม่พบข้อมูลคำสั่งที่คุณค้นหา</p>
+                        <p class="text-xs">กรุณาลองป้อนคำหลัก คีย์ลัด หรือตัวอักษรอื่นดูอีกครั้ง</p>
                     </div>
-                </div>`;
+                `;
+                matchCount.textContent = 0;
+                return;
+            }
+
+            matchCount.textContent = data.length;
+
+            data.forEach(item => {
+                let catBadge = '';
+                let borderCol = '';
+                let bgHov = '';
+                
+                switch(item.category) {
+                    case 'draw':
+                        catBadge = '<span class="text-xs font-semibold px-2 py-0.5 bg-cyan-500/10 text-cyan-400 rounded-md border border-cyan-500/20"><i class="fa-solid fa-pen-nib mr-1"></i>เขียนแบบ</span>';
+                        borderCol = 'border-slate-800 focus-within:border-cyan-500';
+                        break;
+                    case 'modify':
+                        catBadge = '<span class="text-xs font-semibold px-2 py-0.5 bg-orange-500/10 text-orange-400 rounded-md border border-orange-500/20"><i class="fa-solid fa-scissors mr-1"></i>แก้ไขวัตถุ</span>';
+                        borderCol = 'border-slate-800 focus-within:border-orange-500';
+                        break;
+                    case 'view':
+                        catBadge = '<span class="text-xs font-semibold px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded-md border border-emerald-500/20"><i class="fa-solid fa-arrows-to-eye mr-1"></i>มิติ/มุมมอง</span>';
+                        borderCol = 'border-slate-800 focus-within:border-emerald-500';
+                        break;
+                    case 'sys':
+                        catBadge = '<span class="text-xs font-semibold px-2 py-0.5 bg-purple-500/10 text-purple-400 rounded-md border border-purple-500/20"><i class="fa-solid fa-gears mr-1"></i>ระบบหลัก</span>';
+                        borderCol = 'border-slate-800 focus-within:border-purple-500';
+                        break;
+                }
+
+                const cardHtml = `
+                    <div class="bg-slate-900/60 border ${borderCol} rounded-xl p-5 card-transition flex flex-col justify-between group">
+                        <div>
+                            <!-- Card Header -->
+                            <div class="flex items-center justify-between mb-3">
+                                ${catBadge}
+                                <span class="bg-slate-950 px-2.5 py-1 rounded text-sm font-mono font-black text-cyan-400 border border-slate-800 group-hover:border-cyan-500/30 transition-all shadow-sm">
+                                    ${item.shortcut}
+                                </span>
+                            </div>
+                            
+                            <!-- Command Meta -->
+                            <h3 class="text-lg font-bold text-slate-100 group-hover:text-cyan-400 transition-colors tech-font">
+                                ${item.name}
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-300 mt-1.5 leading-relaxed">
+                                ${item.desc}
+                            </p>
+                        </div>
+
+                        <!-- Pro Tip Banner -->
+                        <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-start gap-2 text-xs text-slate-400 italic">
+                            <i class="fa-regular fa-lightbulb text-yellow-500 mt-0.5 shrink-0"></i>
+                            <span>${item.tip}</span>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHtml;
             });
         }
 
-        function syncData() {
-            localStorage.setItem('books', JSON.stringify(libraryBooks));
-            localStorage.setItem('borrowHistory', JSON.stringify(borrowHistory));
+        // Search Filter Logic
+        function searchCommands() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            
+            // Get Active Filter Category
+            const activeFilter = document.querySelector('.cat-btn.active').getAttribute('data-cat');
+            
+            let filtered = commandsData;
+            
+            // Filter by category if not 'all'
+            if (activeFilter !== 'all') {
+                filtered = filtered.filter(item => item.category === activeFilter);
+            }
+            
+            // Filter by search text
+            if (query !== '') {
+                filtered = filtered.filter(item => 
+                    item.shortcut.toLowerCase().includes(query) || 
+                    item.name.toLowerCase().includes(query) || 
+                    item.desc.toLowerCase().includes(query) ||
+                    item.tip.toLowerCase().includes(query)
+                );
+            }
+            
+            renderCards(filtered);
         }
 
-        function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-        function toggleLogoutPopup() { const m = document.getElementById('logout-menu'); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
-        function handleLogout() { location.reload(); }
+        // Category Filter Logic
+        function filterCategory(category) {
+            // Update Active Class on Buttons
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-cat') === category) {
+                    btn.className = "cat-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-cyan-500 text-slate-950 active";
+                } else {
+                    btn.className = "cat-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700";
+                }
+            });
+
+            // Trigger Search logic (which respects active category)
+            searchCommands();
+        }
+
+        // Initial Load
+        window.onload = function() {
+            renderCards(commandsData);
+        };
     </script>
 </body>
 </html>
